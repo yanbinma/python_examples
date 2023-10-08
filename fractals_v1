@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 num=200
+toShow=False
 # test 100 times, starting from 0 
 def isMandelbrotSet(cn):
     z = 0
@@ -27,7 +28,8 @@ def calcCoordinatesInRect(x1,x2,y1,y2):
 def drawInRect(x1,x2,y1,y2):
     xlist, ylist = calcCoordinatesInRect(x1,x2,y1,y2)
     plt.scatter(xlist, ylist)
-    plt.show()
+    if toShow:
+        plt.show()
 
 # test all complex numbers within (-2:2, -2:2)
 
@@ -35,9 +37,13 @@ def onBoundChange(ax):
     ax.set_autoscale_on(False)
     vl = ax.viewLim
     drawInRect(vl.x0,vl.x1,vl.y0,vl.y1)
-    
-plt.gca().callbacks.connect('xlim_changed', onBoundChange)
-plt.gca().callbacks.connect('ylim_changed', onBoundChange)
+
+ax=plt.gca()
+ax.callbacks.connect('xlim_changed', onBoundChange)
+ax.callbacks.connect('ylim_changed', onBoundChange)
 
 plt.title("Mandelbrot Set")
-drawInRect(-2,2,-2,2)
+ax.set_xlim([-2,1])
+ax.set_ylim([-1,1])
+toShow=True
+onBoundChange(ax)
