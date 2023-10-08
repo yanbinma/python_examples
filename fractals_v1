@@ -2,12 +2,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 num=200
+# one interesting find: the resulted shape seems to be power-1 sided;
+# when power=6, it's shaped as a pentagon; when zoom-in, it starts to look like human palm with 5 fingers 
+power=2
+tests=113
 toShow=False
-# test 100 times, starting from 0 
+# test 'tests' times, starting from 0 
 def isMandelbrotSet(cn):
     z = 0
-    for i in range(100):
-        z = z**2 + cn
+    for i in range(tests):
+        z = z**power + cn
         if abs(z.real)>2.0 or abs(z.imag)>2.0:
             return False
     return True
@@ -47,3 +51,4 @@ ax.set_xlim([-2,1])
 ax.set_ylim([-1,1])
 toShow=True
 onBoundChange(ax)
+
